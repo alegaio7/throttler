@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Authors>Alejandro Gaio</Authors>
+    <Company>Alejandro Gaio</Company>
+    <Description>A configurable throttler component that can run tasks in parallel, with a configured concurrency and minimum delay between task executions.</Description>
+  </PropertyGroup>
+
+</Project>
