@@ -31,7 +31,7 @@ var tr = new Throttler.TaskRunnerCoordinator<string, string>(3, 3000);
 
 After the coordinator is created, start enqueuing tasks to it:
 ```sh
-# simulation of a task that should send emails to a list of persons
+# simulate a task that should call an external API with a name of a person as a parameter
 # define the list of persons:
 var list = new List<string>();
 list.Add("juan");
@@ -49,7 +49,19 @@ list.Add("tadeo");
 var taskids = new List<int>();
 foreach (var s in list)
 {
-    taskids.Add(tr.Enqueue(new Func<string,string>(GetFakeReturnValue), s));
+    taskids.Add(tr.Enqueue(new Func<string,string>(CallExternalApiFake), s));
+}
+ 
+string CallExternalApiFake(string name)
+{
+    var r = Random.Shared.Next(3, 8) * 100;
+    Throttler.Logger.Log($"Inside {nameof(CallExternalApiFake)}. Args={name}. Delay of task={r}ms.");
+    Thread.Sleep(r); // simulate an api call with the delay
+
+    // this simulates an uncontrolled exception, that the throttler must manage
+    if (name == "matias")
+        throw new ApplicationException("TEST EXCEPTION!");
+    return $"{name} is OK!";
 }
 ```
 
