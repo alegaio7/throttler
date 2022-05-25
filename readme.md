@@ -65,21 +65,22 @@ string CallExternalApiFake(string name)
 }
 ```
 
-`tr.Enqueue` merely creates a reference to tasks that will be executed, but they're aren't executed yet:
+`tr.Enqueue` merely creates a reference to tasks that will be executed, but they're aren't executed yet.
 
-To begin processing the tasks with the concurrenty/delay defined in the constructor of TaskRunnerCoordinatorm run:
+To begin processing the tasks with the concurrency/delay defined in the constructor of TaskRunnerCoordinator, run:
 
 ```sh
 await tr.ProcessTasks();
 ```
 
 Then, you may want to wait for the tasks to complete.
-**Note:** If the target methods are Actions (no return value), then you may choose to not wait  them for completion, unless you're terminating a process or something like that.
+
+**Note:** If the target method is an action (no return value), then you may opt not to wait for completion, unless you're terminating a process or something like that.
 ```
 await tr.WaitForTasksToComplete();
 ```
 
-Finally, if you need the return value of the tasks after they have completed, get them:
+Finally, if you need the return value of the tasks after they have completed, get them with GetCompletedTaskInfo:
 
 ```sh
 var sb = new System.Text.StringBuilder();
@@ -103,7 +104,7 @@ foreach (var tid in taskids)
 Throttler.Logger.Log(sb.ToString());
 ```
 
-##3 Requirements/dependencies
+## Requirements/dependencies
 - .NET Core 6 (but should be able to run in lower version, and also in .NET Framework too)
 
 ## Pending
